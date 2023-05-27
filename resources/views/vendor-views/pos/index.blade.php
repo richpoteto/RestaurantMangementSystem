@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title -->
-    <title>@yield('title')</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="">
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
-    <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/vendor.min.css">
-    <link rel="stylesheet" href="{{asset('public/assets/admin')}}/vendor/icon-set/style.css">
-    <!-- CSS Front Template -->
-    <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/theme.minc619.css?v=1.0">
-    @stack('css_or_js')
+@extends('layouts.vendor.app')
 
+@section('title', translate('messages.pos'))
+
+@push('css_or_js')
     <style>
         .scroll-bar {
             max-height: calc(100vh - 100px);
@@ -96,25 +83,8 @@
 
     <script src="{{asset('public/assets/admin')}}/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js"></script>
     <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/toastr.css">
-</head>
-
-<body class="footer-offset">
-
-{{--loader--}}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="loading" style="display: none;">
-                <div style="position: fixed;z-index: 9999; left: 40%;top: 37% ;width: 100%">
-                    <img width="200" src="{{asset('public/assets/admin/img/loader.gif')}}">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{--loader--}}
-
-<!-- JS Preview mode only -->
+    @endpush
+    <!-- JS Preview mode only -->
     <header id="header"
             class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-flush navbar-container navbar-bordered">
         <div class="navbar-nav-wrap">
@@ -218,8 +188,7 @@
         </div>
     </header>
 <!-- END ONLY DEV -->
-
-<main id="content" role="main" class="main pointer-event">
+    @section('content')
 <!-- Content -->
 	<!-- ========================= SECTION CONTENT ========================= -->
 	<section class="section-content padding-y-sm bg-default mt-1">
@@ -320,16 +289,11 @@
     </div>
     @endif
 
-
-
-</main>
+    @endsection
 <!-- ========== END MAIN CONTENT ========== -->
-<!-- JS Implementing Plugins -->
-<script src="{{asset('public/assets/admin')}}/js/vendor.min.js"></script>
-<script src="{{asset('public/assets/admin')}}/js/theme.min.js"></script>
-<script src="{{asset('public/assets/admin')}}/js/sweet_alert.js"></script>
-<script src="{{asset('public/assets/admin')}}/js/toastr.js"></script>
 {!! Toastr::message() !!}
+@push('script_2')
+
 
 @if ($errors->any())
     <script>
@@ -555,7 +519,6 @@
     }
 
     function addToCart(form_id = 'add-to-cart-form') {
-        if (checkAddToCartValidity()) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -607,13 +570,6 @@
                     $('#loading').hide();
                 }
             });
-        } else {
-            Swal.fire({
-                type: 'info',
-                title: 'Cart',
-                text: 'Please choose all the options'
-            });
-        }
     }
 
     function removeFromCart(key) {
@@ -760,5 +716,4 @@
 <script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="{{asset('public/assets/admin')}}/vendor/babel-polyfill/polyfill.min.js"><\/script>');
 </script>
-</body>
-</html>
+@endpush

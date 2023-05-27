@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class POSController extends Controller
 {
@@ -62,6 +64,8 @@ class POSController extends Controller
     {
         $product = Food::withoutGlobalScope(RestaurantScope::class)->with('restaurant')->findOrFail($request->product_id);
         //dd($product);
+        Log::channel('stderr')->info("Product");
+        Log::channel('stderr')->info($product);
         return response()->json([
             'success' => 1,
             'view' => view('admin-views.pos._quick-view-data', compact('product'))->render(),

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Log;
+use App\CentralLogics\Helpers;
 
 class AddGalleryController extends Controller
 {
@@ -21,7 +22,6 @@ class AddGalleryController extends Controller
         $diningGallery = json_decode($vendor->dining_gallery, true) ?? [];
         $chefGallery = json_decode($vendor->chef_gallery, true) ?? [];
         $productGallery = json_decode($vendor->product_gallery, true) ?? [];
-        $data = [];
 
         Log::channel('stderr')->info($foodGallery);
         Log::channel('stderr')->info($diningGallery);
@@ -34,8 +34,7 @@ class AddGalleryController extends Controller
             Log::channel('stderr')->info($food_images);
             Log::channel('stderr')->info('Food Images');
             foreach ($food_images as $image) {
-                $imageName = \Carbon\Carbon::now()->toDateString() . "-" . uniqid() . ".png";
-                $image->move(public_path('assets/chef/image'), $imageName);
+                $imageName = Helpers::upload('chef/image/', 'png', $image);
                 array_push($foodGallery, $imageName);
             }
         }
@@ -44,8 +43,7 @@ class AddGalleryController extends Controller
             Log::channel('stderr')->info($dining_images);
             Log::channel('stderr')->info('Dining Images');
             foreach ($dining_images as $image) {
-                $imageName = \Carbon\Carbon::now()->toDateString() . "-" . uniqid() . ".png";
-                $image->move(public_path('assets/chef/image'), $imageName);
+                $imageName = Helpers::upload('chef/image/', 'png', $image);
                 array_push($diningGallery, $imageName);
             }
         }
@@ -54,8 +52,7 @@ class AddGalleryController extends Controller
             Log::channel('stderr')->info($chef_images);
             Log::channel('stderr')->info('Chef Images');
             foreach ($chef_images as $image) {
-                $imageName = \Carbon\Carbon::now()->toDateString() . "-" . uniqid() . ".png";
-                $image->move(public_path('assets/chef/image'), $imageName);
+                $imageName = Helpers::upload('chef/image/', 'png', $image);
                 array_push($chefGallery, $imageName);
             }
         }
@@ -64,8 +61,7 @@ class AddGalleryController extends Controller
             Log::channel('stderr')->info($product_images);
             Log::channel('stderr')->info('product images');
             foreach ($product_images as $image) {
-                $imageName = \Carbon\Carbon::now()->toDateString() . "-" . uniqid() . ".png";
-                $image->move(public_path('assets/chef/image'), $imageName);
+                $imageName = Helpers::upload('chef/image/', 'png', $image);
                 array_push($productGallery, $imageName);
             }
         }
@@ -77,5 +73,6 @@ class AddGalleryController extends Controller
     
         $vendor->save();
         Toastr::success(trans('messages.restaurant_image_updated'));
+        return redirect()->back();
     }
 }

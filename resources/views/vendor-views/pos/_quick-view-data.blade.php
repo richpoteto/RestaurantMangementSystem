@@ -99,22 +99,6 @@
             <form id="add-to-cart-form" class="mb-2">
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id }}">
-                @foreach (json_decode($product->choice_options) as $key => $choice)
-
-                        <div class="h3 p-0 pt-2">{{ $choice->title }}
-                        </div>
-
-                        <div class="d-flex justify-content-left flex-wrap">
-                            @foreach ($choice->options as $key => $option)
-                                <input class="btn-check" type="radio"
-                                        id="{{ $choice->name }}-{{ $option }}"
-                                        name="{{ $choice->name }}" value="{{ $option }}"
-                                        @if($key == 0) checked @endif autocomplete="off" >
-                                <label class="btn btn-sm check-label mx-1 choice-input text-break"
-                                    for="{{ $choice->name }}-{{ $option }}">{{ Str::limit($option, 20, '...') }}</label>
-                            @endforeach
-                        </div>
-                @endforeach
 
                 <!-- Quantity + Add to cart -->
                 <div class="d-flex justify-content-between">

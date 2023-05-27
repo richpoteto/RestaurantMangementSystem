@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.admin.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Title -->
-    <title>@yield('title')</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="">
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
-    <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="{{ asset('public/assets/admin') }}/css/vendor.min.css">
-    <link rel="stylesheet" href="{{ asset('public/assets/admin') }}/vendor/icon-set/style.css">
-    <!-- CSS Front Template -->
-    <link rel="stylesheet" href="{{ asset('public/assets/admin') }}/css/theme.minc619.css?v=1.0">
-    <!-- JS Implementing Plugins -->
-    <script src="{{ asset('public/assets/admin') }}/js/vendor.min.js"></script>
-    <script src="{{ asset('public/assets/admin') }}/js/theme.min.js"></script>
-    <script src="{{ asset('public/assets/admin') }}/js/sweet_alert.js"></script>
-    <script src="{{ asset('public/assets/admin') }}/js/toastr.js"></script>
-    @stack('css_or_js')
+@section('title', translate('messages.pos'))
 
-    <style>
+@push('css_or_js')
+<style>
         .scroll-bar {
             max-height: calc(100vh - 100px);
             overflow-y: auto !important;
@@ -111,128 +92,9 @@
 
     </style>
     <link rel="stylesheet" href="{{ asset('public/assets/admin') }}/css/toastr.css">
-</head>
+@endpush
 
-<body class="footer-offset">
-    {{-- loader --}}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="loading" style="display: none;">
-                    <div style="position: fixed;z-index: 9999; left: 40%;top: 37% ;width: 100%">
-                        <img width="200" src="{{ asset('public/assets/admin/img/loader.gif') }}">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- loader --}}
-    <!-- JS Preview mode only -->
-    <header id="header"
-        class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-flush navbar-container navbar-bordered">
-        <div class="navbar-nav-wrap">
-            <div class="navbar-brand-wrapper" onclick="location.href='{{ route('admin.dashboard') }}'"
-                style="cursor: pointer;font-weight: bold;font-size: 15px">
-                <!-- Logo Div-->
-                @php($restaurant_logo = \App\Models\BusinessSetting::where(['key' => 'logo'])->first()->value)
-                <a class="navbar-brand" href="{{ route('admin.dashboard') }}" aria-label="">
-                    <img class="" style="max-height: 48px; border-radius: 8px"
-                        onerror="this.src='{{ asset('public/assets/admin/img/160x160/img1.jpg') }}'"
-                        src="{{ asset('storage/app/public/business/' . $restaurant_logo) }}" alt="Logo">
-                </a>
-            </div>
-
-            <!-- Secondary Content -->
-            <div class="navbar-nav-wrap-content-right">
-                <!-- Navbar -->
-                <ul class="navbar-nav align-items-center flex-row">
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <!-- Notification -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                                href="{{ route('admin.pos.orders', ['status' => 'pending']) }}">
-                                <i class="tio-shopping-cart-outlined"></i>
-                                {{-- <span class="btn-status btn-sm-status btn-status-danger"></span> --}}
-                            </a>
-                        </div>
-                        <!-- End Notification -->
-                    </li>
-
-                    <li class="nav-item">
-                        <!-- Account -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker navbar-dropdown-account-wrapper" href="javascript:;"
-                                data-hs-unfold-options='{
-                                     "target": "#accountNavbarDropdown",
-                                     "type": "css-animation"
-                                   }'>
-                                <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img"
-                                        onerror="this.src='{{ asset('public/assets/admin/img/160x160/img1.jpg') }}'"
-                                        src="{{ asset('storage/app/public/admin/' . auth('admin')->user()->image) }}"
-                                        alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                </div>
-                            </a>
-
-                            <div id="accountNavbarDropdown"
-                                class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right navbar-dropdown-menu navbar-dropdown-account"
-                                style="width: 16rem;">
-                                <div class="dropdown-item-text">
-                                    <div class="media align-items-center">
-                                        <div class="avatar avatar-sm avatar-circle mr-2">
-                                            <img class="avatar-img"
-                                                onerror="this.src='{{ asset('public/assets/admin/img/160x160/img1.jpg') }}'"
-                                                src="{{ asset('storage/app/public/admin/' . auth('admin')->user()->image) }}"
-                                                alt="Owner image">
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="card-title h5">{{ auth('admin')->user()->f_name }}</span>
-                                            <span class="card-text">{{ auth('admin')->user()->email }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="dropdown-divider"></div>
-
-                                <a class="dropdown-item" href="#">
-                                    <span class="text-truncate pr-2"
-                                        title="Settings">{{ translate('messages.settings') }}</span>
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <a class="dropdown-item" href="javascript:" onclick="Swal.fire({
-                                    title: 'Do you want to logout?',
-                                    showDenyButton: true,
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#FC6A57',
-                                    cancelButtonColor: '#363636',
-                                    confirmButtonText: `Yes`,
-                                    denyButtonText: `Don't Logout`,
-                                    }).then((result) => {
-                                    if (result.value) {
-                                    location.href='{{ route('admin.auth.logout') }}';
-                                    } else{
-                                    Swal.fire('Canceled', '', 'info')
-                                    }
-                                    })">
-                                    <span class="text-truncate pr-2"
-                                        title="Sign out">{{ translate('messages.sign_out') }}</span>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- End Account -->
-                    </li>
-                </ul>
-                <!-- End Navbar -->
-            </div>
-            <!-- End Secondary Content -->
-        </div>
-    </header>
-    <!-- END ONLY DEV -->
-
-    <main id="content" role="main" class="main pointer-event">
+@section('content')
         <!-- Content -->
         <!-- ========================= SECTION CONTENT ========================= -->
         <section class="section-content padding-y-sm bg-default mt-1">
@@ -300,7 +162,7 @@
                         </div>
                         <div class="card-body" id="items">
                             <div class="d-flex flex-wrap mt-2 mb-3" style="justify-content: space-around;">
-                                @foreach ($products as $product)
+                            @foreach ($products as $product)
                                     <div class="item-box">
                                         @include('admin-views.pos._single_product', [
                                             'product' => $product,
@@ -449,9 +311,9 @@
                 </div>
             </div>
         </div>
-    </main>
+        @endsection
     <!-- ========== END SECONDARY CONTENTS ========== -->
-    {!! Toastr::message() !!}
+    @push('script_2')
 
     @if ($errors->any())
         <script>
@@ -471,6 +333,7 @@
             });
         });
     </script>
+
     <!-- JS Plugins Init. -->
     <script>
         $(document).on('ready', function() {
@@ -694,7 +557,6 @@
         }
 
         function addToCart(form_id = 'add-to-cart-form') {
-            if (checkAddToCartValidity()) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -744,13 +606,7 @@
                         $('#loading').hide();
                     }
                 });
-            } else {
-                Swal.fire({
-                    type: 'info',
-                    title: 'Cart',
-                    text: 'Please choose all the options'
-                });
-            }
+            
         }
 
         function removeFromCart(key) {
@@ -1030,6 +886,4 @@
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write(
             '<script src="{{ asset('public/assets/admin') }}/vendor/babel-polyfill/polyfill.min.js"><\/script>');
     </script>
-</body>
-
-</html>
+@endpush

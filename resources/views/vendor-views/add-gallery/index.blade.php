@@ -71,9 +71,7 @@
                                 alt=""/> -->
 
                         @foreach ($foodGallery as $key => $imageName)
-                        @if ($loop->index < 3) 
-                        <img style="height: 200px;border: 1px solid; border-radius: 10px;" src="{{asset('public/assets/chef/image/'.$imageName)}}" />
-                        @endif
+                        <img style="height: 50px;border: 1px solid; border-radius: 10px;" src="{{asset('storage/chef/image/'.$imageName)}}" />
                         @endforeach
                     </center>
                 </div>
@@ -96,9 +94,7 @@
                                 onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'"
                                 alt=""/> -->
                         @foreach ($diningGallery as $key => $imageName)
-                        @if ($loop->index < 3) 
-                        <img style="height: 200px;border: 1px solid; border-radius: 10px;" src="{{asset('public/assets/chef/image/'.$imageName)}}" />
-                        @endif
+                        <img style="height: 50px;border: 1px solid; border-radius: 10px;" src="{{asset('storage/chef/image/'.$imageName)}}" />
                         @endforeach
                     </center>
                 </div>
@@ -121,9 +117,7 @@
                                 onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'"
                                 alt=""/> -->
                         @foreach ($chefGallery as $key => $imageName)
-                        @if ($loop->index < 3) 
-                        <img style="height: 200px;border: 1px solid; border-radius: 10px;" src="{{asset('public/assets/chef/image/'.$imageName)}}" />
-                        @endif
+                        <img style="height: 50px;border: 1px solid; border-radius: 10px;" src="{{asset('storage/chef/image/'.$imageName)}}" />
                         @endforeach
                     </center>
                 </div>
@@ -146,9 +140,7 @@
                                 onerror="this.src='{{asset('public/assets/admin/img/400x400/img2.jpg')}}'"
                                 alt=""/> -->
                         @foreach ($productGallery as $key => $imageName)
-                        @if ($loop->index < 3) 
-                        <img style="height: 200px;border: 1px solid; border-radius: 10px;" src="{{asset('public/assets/chef/image/'.$imageName)}}" />
-                        @endif
+                        <img style="height: 50px;border: 1px solid; border-radius: 10px;" src="{{asset('storage/chef/image/'.$imageName)}}" />
                         @endforeach
                     </center>
                 </div>

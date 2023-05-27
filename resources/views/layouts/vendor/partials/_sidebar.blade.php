@@ -302,7 +302,6 @@
                     <!-- End Order -->
                     @endif
                     
-                    @if(\App\CentralLogics\Helpers::employee_module_permission_check('pos'))
                     <li class="nav-item">
                         <small
                             class="nav-subtitle">{{__('messages.pos')}} {{__('messages.system')}}</small>
@@ -340,8 +339,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- End POS -->
-                    @endif      
+                    <!-- End POS --> 
                     <li class="nav-item">
                         <small
                             class="nav-subtitle">{{__('messages.food')}} {{__('messages.management')}}</small>

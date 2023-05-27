@@ -260,7 +260,7 @@
                         
                     @if (\App\CentralLogics\Helpers::module_permission_check('pos'))
                         <!-- POS -->
-                       <!-- <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/pos/*') ? 'active' : '' }}">
+                       <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/pos/*') ? 'active' : '' }}">
                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:">
                                <i class="tio-shopping nav-icon"></i>
                                <span
@@ -287,7 +287,7 @@
                                    </a>
                                </li>
                            </ul>
-                       </li> -->
+                       </li>
                         <!-- End POS -->
                     @endif
                     
