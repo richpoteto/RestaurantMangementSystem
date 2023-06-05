@@ -16,7 +16,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('admin.product.add-new')}}">{{__('messages.products')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('admin.food.add-new')}}">{{__('messages.foods')}}</a></li>
                     <li class="breadcrumb-item" aria-current="page">{{__('messages.update')}}</li>
                 </ol>
             </nav>
@@ -24,7 +24,7 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{ __('messages.product') }}
+                    <h1 class="page-header-title"><i class="tio-filter-list"></i> {{ __('messages.food') }}
                         {{ __('messages.update') }}</h1>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                                         ({{ strtoupper($lang) }})
                                     </label>
                                     <input type="text" name="name[]" id="{{ $lang }}_name" class="form-control"
-                                        placeholder="{{ __('messages.new_product') }}"
+                                        placeholder="{{ __('messages.new_food') }}"
                                         value="{{ $translate[$lang]['name'] ?? $product['name'] }}"
                                         {{ $lang == $default_lang ? 'required' : '' }}
                                         oninvalid="document.getElementById('en-link').click()">
@@ -90,7 +90,7 @@
                                 <label class="input-label" for="exampleFormControlInput1">{{ __('messages.name') }}
                                     (EN)</label>
                                 <input type="text" name="name[]" class="form-control"
-                                    placeholder="{{ __('messages.new_product') }}" value="{{ $product['name'] }}"
+                                    placeholder="{{ __('messages.new_food') }}" value="{{ $product['name'] }}"
                                     required>
                             </div>
                             <input type="hidden" name="lang[]" value="en">
@@ -202,6 +202,42 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-4 col-4">
+                            <div class="form-group">
+                                <label class="input-label" for="exampleFormControlSelect1">{{ __('messages.sub_category') }}
+                                    <span class="input-label-secondary" title="{{ __('messages.category_required_warning') }}">                                        
+                                        <img src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
+                                            alt="{{ __('messages.category_required_warning') }}">
+                                    </span>
+                                </label>
+                                <select name="sub_category_id" id="sub_category_id"
+                                    class="form-control js-select2-custom" required>
+                                    @foreach ($sub_categories as $sub_category)
+                                        <option value="{{ $sub_category['id'] }}"
+                                            {{ $sub_category->id == $category_ids[0]->id ? 'selected' : '' }}>
+                                            {{ $sub_category['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-4">
+                            <div class="form-group">
+                                <label class="input-label" for="exampleFormControlSelect1">Sub Sub Category
+                                    <span class="input-label-secondary">
+                                        <img src="{{ asset('/public/assets/admin/img/info-circle.svg') }}"
+                                            alt="{{ __('messages.sub_category_required_warning') }}">
+                                    </span>
+                                </label>
+                                <select name="sub_sub_category_id" id="sub_sub_category_id"
+                                        class="form-control js-select2-custom" required>
+                                    @foreach ($subsub_categories as $subsub_category)
+                                        <option value="{{ $subsub_category['id'] }}"
+                                            {{ $subsub_category->id == $category_ids[1]->id ? 'selected' : '' }}>
+                                            {{ $subsub_category['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row mt-2 col-md-6 col-6" style="padding-top: 12px">
@@ -244,7 +280,7 @@
                     </div>
 
                     <div class="form-group" style="padding-top: 12px">
-                        <label>{{ __('messages.product') }} {{ __('messages.image') }}</label><small style="color: red">
+                        <label>{{ __('messages.food') }} {{ __('messages.image') }}</label><small style="color: red">
                             (
                             {{ __('messages.ratio') }} 1:1 )</small>
                         <div class="custom-file">
@@ -387,7 +423,7 @@
                 }
             });
             $.post({
-                url: '{{ route('admin.product.update', [$product['id']]) }}',
+                url: '{{ route('admin.food.update', [$product['id']]) }}',
                 data: $('#product_form').serialize(),
                 data: formData,
                 cache: false,
@@ -412,7 +448,7 @@
                         });
                         setTimeout(function() {
                             location.href =
-                                '{{ \Request::server('HTTP_REFERER') ?? route('admin.product.list') }}';
+                                '{{ \Request::server('HTTP_REFERER') ?? route('admin.food.list') }}';
                         }, 2000);
                     }
                 }

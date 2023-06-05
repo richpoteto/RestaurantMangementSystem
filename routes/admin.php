@@ -92,6 +92,33 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
             Route::post('bulk-export', 'FoodController@bulk_export_data')->name('bulk-export');
         });
 
+        Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['module:product']], function () {
+            Route::get('add-new', 'GoodController@index')->name('add-new');
+            Route::post('variant-combination', 'GoodController@variant_combination')->name('variant-combination');
+            Route::post('store', 'GoodController@store')->name('store');
+            Route::get('edit/{id}', 'GoodController@edit')->name('edit');
+            Route::post('update/{id}', 'GoodController@update')->name('update');
+            Route::get('list', 'GoodController@list')->name('list');
+            Route::delete('delete/{id}', 'GoodController@delete')->name('delete');
+            Route::get('status/{id}/{status}', 'GoodController@status')->name('status');
+            Route::get('review-status/{id}/{status}', 'GoodController@reviews_status')->name('reviews.status');
+            Route::post('search', 'GoodController@search')->name('search');
+            Route::get('reviews', 'GoodController@review_list')->name('reviews');
+            Route::get('change-priority/{id}', 'GoodController@change_priority')->name('change-priority');
+            Route::get('featured/{product}/{f_featured}', 'GoodController@change_feature')->name('featured');
+            Route::get('trending/{product}/{f_trending}', 'GoodController@change_trending')->name('trending');
+            Route::get('view/{id}', 'GoodController@view')->name('view');
+            //ajax request
+            Route::get('get-categories', 'GoodController@get_categories')->name('get-categories');
+            Route::get('get-products', 'GoodController@get_products')->name('getproducts');
+
+            //Import and export
+            Route::get('bulk-import', 'GoodController@bulk_import_index')->name('bulk-import');
+            Route::post('bulk-import', 'GoodController@bulk_import_data');
+            Route::get('bulk-export', 'GoodController@bulk_export_index')->name('bulk-export-index');
+            Route::post('bulk-export', 'GoodController@bulk_export_data')->name('bulk-export');
+        });
+
         Route::group(['prefix' => 'banner', 'as' => 'banner.', 'middleware' => ['module:banner']], function () {
             Route::get('add-new', 'BannerController@index')->name('add-new');
             Route::post('store', 'BannerController@store')->name('store');

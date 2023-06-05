@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Add new food')
+@section('title', 'Add new product')
 
 @push('css_or_js')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,7 +14,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.dashboard')}}</a></li>
-                    <li class="breadcrumb-item" aria-current="page">{{__('messages.foods')}}</li>
+                    <li class="breadcrumb-item" aria-current="page">{{__('messages.products')}}</li>
                 </ol>
             </nav>
         </div>
@@ -22,14 +22,14 @@
             <div class="row align-items-center">
                 <div class="col-sm mb-2 mb-sm-0">
                     <h1 class="page-header-title"><i class="tio-filter-list"></i> {{ __('messages.add') }}
-                        {{ __('messages.new') }} {{ __('messages.food') }}</h1>
+                        {{ __('messages.new') }} {{ __('messages.product') }}</h1>
                 </div>
             </div>
         </div>
         <!-- End Page Header -->
         <div class="row gx-2 gx-lg-3">
             <div class="col-sm-12 col-lg-12 mb-3 mb-lg-2">
-                <form action="javascript:" method="post" id="food_form" enctype="multipart/form-data">
+                <form action="javascript:" method="post" id="product_form" enctype="multipart/form-data">
                     @csrf
                     @php($language = \App\Models\BusinessSetting::where('key', 'language')->first())
                     @php($language = $language->value ?? null)
@@ -51,7 +51,7 @@
                                     <label class="input-label" for="{{ $lang }}_name">{{ __('messages.name') }}
                                         ({{ strtoupper($lang) }})</label>
                                     <input type="text" name="name[]" id="{{ $lang }}_name" class="form-control"
-                                        placeholder="{{ __('messages.new_food') }}"
+                                        placeholder="{{ __('messages.new_product') }}"
                                         {{ $lang == $default_lang ? 'required' : '' }}
                                         oninvalid="document.getElementById('en-link').click()">
                                 </div>
@@ -69,7 +69,7 @@
                                 <label class="input-label" for="exampleFormControlInput1">{{ __('messages.name') }}
                                     (EN)</label>
                                 <input type="text" name="name[]" class="form-control"
-                                    placeholder="{{ __('messages.new_food') }}" required>
+                                    placeholder="{{ __('messages.new_product') }}" required>
                             </div>
                             <input type="hidden" name="lang[]" value="en">
                             <div class="form-group pt-4">
@@ -149,7 +149,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="padding-top: 12px;">
+                    <!-- <div class="row" style="padding-top: 12px;">
                         <div class="col-md-4 col-6">
                             <div class="form-group">
                                 <label class="input-label" for="exampleFormControlSelect1">{{ __('messages.category') }}
@@ -196,7 +196,7 @@
                                 </select>
                             </div>
                         </div> 
-                    </div>
+                    </div> -->
 
                     <div class="row" style="padding-top: 12px;">
                         <div class="col-6">
@@ -235,7 +235,7 @@
                     </div>
 
                     <div class="form-group" style="padding-top: 12px;">
-                        <label>{{ __('messages.food') }} {{ __('messages.image') }}</label><small style="color: red"> (
+                        <label>{{ __('messages.product') }} {{ __('messages.image') }}</label><small style="color: red"> (
                             {{ __('messages.ratio') }} 1:1 )</small>
                         <div class="custom-file">
                             <input type="file" name="image" id="customFileEg1" class="custom-file-input"
@@ -327,7 +327,7 @@
     <script src="{{ asset('public/assets/admin') }}/js/tags-input.min.js"></script>
 
     <script>
-        $('#food_form').on('submit', function(e) {
+        $('#product_form').on('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             $.ajaxSetup({
@@ -336,8 +336,8 @@
                 }
             });
             $.post({
-                url: '{{ route('admin.food.store') }}',
-                data: $('#food_form').serialize(),
+                url: '{{ route('admin.product.store') }}',
+                data: $('#product_form').serialize(),
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -361,7 +361,7 @@
                         });
                         setTimeout(function() {
                             location.href =
-                                '{{ \Request::server('HTTP_REFERER') ?? route('admin.food.list') }}';
+                                '{{ \Request::server('HTTP_REFERER') ?? route('admin.product.list') }}';
                         }, 2000);
                     }
                 }

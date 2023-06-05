@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\CentralLogics\RestaurantLogic;
 use Illuminate\Support\Facades\Storage;
 use Laravelpkg\Laravelchk\Http\Controllers\LaravelchkController;
+use Illuminate\Support\Facades\Log;
 
 class Helpers
 {

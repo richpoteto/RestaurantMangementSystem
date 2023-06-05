@@ -484,7 +484,8 @@
                                 title="{{ __('messages.food') }}">
                                 <i class="tio-premium-outlined nav-icon"></i>
                                 <span
-                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.foods') }}</span>
+                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.foods') }}
+                                </span>
                             </a>
                             <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                 style="display: {{ Request::is('admin/food*') ? 'block' : 'none' }}">
@@ -530,6 +531,38 @@
                         </li>
                     @endif
                     <!-- End Food Management -->
+
+                    <!-- Product -->
+                    <!-- @if (\App\CentralLogics\Helpers::module_permission_check('product')) -->
+                        <li
+                            class="navbar-vertical-aside-has-menu {{ Request::is('admin/product*') ? 'active' : '' }}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:"
+                                title="{{ __('messages.product') }}">
+                                <i class="tio-premium-outlined nav-icon"></i>
+                                <span
+                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.products') }}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
+                                style="display: {{ Request::is('admin/food*') ? 'block' : 'none' }}">
+                                <li class="nav-item {{ Request::is('admin/product/list') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.product.list') }}"
+                                        title="{{ __('messages.product') }} {{ __('messages.list') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">Product List</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ Request::is('admin/product/add-new') ? 'active' : '' }}">
+                                    <a class="nav-link " href="{{ route('admin.product.add-new') }}"
+                                        title="{{ __('messages.add') }} {{ __('messages.new') }}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{ __('messages.add') }}
+                                            {{ __('messages.new') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <!-- @endif -->
+                    <!-- End Product Management -->
                     
                     <!-- Attributes -->
                     @if (\App\CentralLogics\Helpers::module_permission_check('attribute'))
@@ -850,17 +883,17 @@
                     <!-- End Campaign -->
                     
                     <!-- Coupon -->
-                    <!--@if (\App\CentralLogics\Helpers::module_permission_check('coupon'))-->
-                    <!--    <li-->
-                    <!--        class="navbar-vertical-aside-has-menu {{ Request::is('admin/coupon*') ? 'active' : '' }}">-->
-                    <!--        <a class="js-navbar-vertical-aside-menu-link nav-link"-->
-                    <!--            href="{{ route('admin.coupon.add-new') }}" title="{{ __('messages.coupon') }}">-->
-                    <!--            <i class="tio-gift nav-icon"></i>-->
-                    <!--            <span-->
-                    <!--                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.coupons') }}</span>-->
-                    <!--        </a>-->
-                    <!--    </li>-->
-                    <!--@endif-->
+                    <!-- @if (\App\CentralLogics\Helpers::module_permission_check('coupon')) -->
+                       <li
+                           class="navbar-vertical-aside-has-menu {{ Request::is('admin/coupon*') ? 'active' : '' }}">
+                           <a class="js-navbar-vertical-aside-menu-link nav-link"
+                               href="{{ route('admin.coupon.add-new') }}" title="{{ __('messages.coupon') }}">
+                               <i class="tio-gift nav-icon"></i>
+                               <span
+                                   class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.coupons') }}</span>
+                           </a>
+                       </li>
+                    <!-- @endif -->
                     <!-- End Coupon -->
                     
                     <!-- Business Section-->
@@ -1182,31 +1215,31 @@
                     <!-- End web & adpp Settings -->
 
                     <!-- Report -->
-                    <!--@if (\App\CentralLogics\Helpers::module_permission_check('report'))-->
-                    <!--    <li class="nav-item">-->
-                    <!--        <small class="nav-subtitle"-->
-                    <!--            title="{{ __('messages.report_and_analytics') }}">{{ __('messages.report_and_analytics') }}</small>-->
-                    <!--        <small class="tio-more-horizontal nav-subtitle-replacer"></small>-->
-                    <!--    </li>-->
+                    @if (\App\CentralLogics\Helpers::module_permission_check('report'))
+                       <li class="nav-item">
+                           <small class="nav-subtitle"
+                               title="{{ __('messages.report_and_analytics') }}">{{ __('messages.report_and_analytics') }}</small>
+                           <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                       </li>
 
-                    <!--    <li-->
-                    <!--        class="navbar-vertical-aside-has-menu {{ Request::is('admin/report/day-wise-report') ? 'active' : '' }}">-->
-                    <!--        <a class="nav-link " href="{{ route('admin.report.day-wise-report') }}"-->
-                    <!--            title="{{ __('messages.day_wise_report') }}">-->
-                    <!--            <span class="tio-report nav-icon"></span>-->
-                    <!--            <span class="text-truncate">{{ __('messages.day_wise_report') }}</span>-->
-                    <!--        </a>-->
-                    <!--    </li>-->
+                       <li
+                           class="navbar-vertical-aside-has-menu {{ Request::is('admin/report/day-wise-report') ? 'active' : '' }}">
+                           <a class="nav-link " href="{{ route('admin.report.day-wise-report') }}"
+                               title="{{ __('messages.day_wise_report') }}">
+                               <span class="tio-report nav-icon"></span>
+                               <span class="text-truncate">{{ __('messages.day_wise_report') }}</span>
+                           </a>
+                       </li>
 
-                    <!--    <li-->
-                    <!--        class="navbar-vertical-aside-has-menu {{ Request::is('admin/report/food-wise-report') ? 'active' : '' }}">-->
-                    <!--        <a class="nav-link " href="{{ route('admin.report.food-wise-report') }}"-->
-                    <!--            title="{{ __('messages.food_wise_report') }}">-->
-                    <!--            <span class="tio-report nav-icon"></span>-->
-                    <!--            <span class="text-truncate">{{ __('messages.food_wise_report') }}</span>-->
-                    <!--        </a>-->
-                    <!--    </li>-->
-                    <!--@endif-->
+                       <li
+                           class="navbar-vertical-aside-has-menu {{ Request::is('admin/report/food-wise-report') ? 'active' : '' }}">
+                           <a class="nav-link " href="{{ route('admin.report.food-wise-report') }}"
+                               title="{{ __('messages.food_wise_report') }}">
+                               <span class="tio-report nav-icon"></span>
+                               <span class="text-truncate">{{ __('messages.food_wise_report') }}</span>
+                           </a>
+                       </li>
+                    @endif
 
                     <!-- Employee-->
 
@@ -1231,36 +1264,36 @@
                         </li>
                     @endif
 
-                    <!--@if (\App\CentralLogics\Helpers::module_permission_check('employee'))-->
-                    <!--    <li-->
-                    <!--        class="navbar-vertical-aside-has-menu {{ Request::is('admin/employee*') ? 'active' : '' }}">-->
-                    <!--        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:"-->
-                    <!--            title="{{ __('messages.Employee') }}">-->
-                    <!--            <i class="tio-user nav-icon"></i>-->
-                    <!--            <span-->
-                    <!--                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.employees') }}</span>-->
-                    <!--        </a>-->
-                    <!--        <ul class="js-navbar-vertical-aside-submenu nav nav-sub"-->
-                    <!--            style="display: {{ Request::is('admin/employee*') ? 'block' : 'none' }}">-->
-                    <!--            <li class="nav-item {{ Request::is('admin/employee/add-new') ? 'active' : '' }}">-->
-                    <!--                <a class="nav-link " href="{{ route('admin.employee.add-new') }}"-->
-                    <!--                    title="{{ __('messages.add') }} {{ __('messages.new') }} {{ __('messages.Employee') }}">-->
-                    <!--                    <span class="tio-circle nav-indicator-icon"></span>-->
-                    <!--                    <span class="text-truncate">{{ __('messages.add') }}-->
-                    <!--                        {{ __('messages.new') }}</span>-->
-                    <!--                </a>-->
-                    <!--            </li>-->
-                    <!--            <li class="nav-item {{ Request::is('admin/employee/list') ? 'active' : '' }}">-->
-                    <!--                <a class="nav-link " href="{{ route('admin.employee.list') }}"-->
-                    <!--                    title="{{ __('messages.Employee') }} {{ __('messages.list') }}">-->
-                    <!--                    <span class="tio-circle nav-indicator-icon"></span>-->
-                    <!--                    <span class="text-truncate">{{ __('messages.list') }}</span>-->
-                    <!--                </a>-->
-                    <!--            </li>-->
+                    @if (\App\CentralLogics\Helpers::module_permission_check('employee'))
+                       <li
+                           class="navbar-vertical-aside-has-menu {{ Request::is('admin/employee*') ? 'active' : '' }}">
+                           <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:"
+                               title="{{ __('messages.Employee') }}">
+                               <i class="tio-user nav-icon"></i>
+                               <span
+                                   class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ __('messages.employees') }}</span>
+                           </a>
+                           <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
+                               style="display: {{ Request::is('admin/employee*') ? 'block' : 'none' }}">
+                               <li class="nav-item {{ Request::is('admin/employee/add-new') ? 'active' : '' }}">
+                                   <a class="nav-link " href="{{ route('admin.employee.add-new') }}"
+                                       title="{{ __('messages.add') }} {{ __('messages.new') }} {{ __('messages.Employee') }}">
+                                       <span class="tio-circle nav-indicator-icon"></span>
+                                       <span class="text-truncate">{{ __('messages.add') }}
+                                           {{ __('messages.new') }}</span>
+                                   </a>
+                               </li>
+                               <li class="nav-item {{ Request::is('admin/employee/list') ? 'active' : '' }}">
+                                   <a class="nav-link " href="{{ route('admin.employee.list') }}"
+                                       title="{{ __('messages.Employee') }} {{ __('messages.list') }}">
+                                       <span class="tio-circle nav-indicator-icon"></span>
+                                       <span class="text-truncate">{{ __('messages.list') }}</span>
+                                   </a>
+                               </li>
 
-                    <!--        </ul>-->
-                    <!--    </li>-->
-                    <!--@endif-->
+                           </ul>
+                       </li>
+                    @endif
                     <!-- End Employee -->
 
                     <li class="nav-item" style="padding-top: 100px">

@@ -43,7 +43,6 @@ class CustomRoleController extends Controller
         Toastr::success(trans('messages.role_added_successfully'));
         return back();
     }
-
     public function edit($id)
     {
         $role=EmployeeRole::where('restaurant_id',Helpers::get_restaurant_id())->where(['id'=>$id])->first(['id','name','modules']);

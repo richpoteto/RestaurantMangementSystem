@@ -1,19 +1,19 @@
 @extends('layouts.admin.app')
 
-@section('title','Product Preview')
+@section('title','Food Preview')
 
 @push('css_or_js')
 
 @endpush
 
 @section('content')
-<div class="content container-fluid">
+    <div class="content container-fluid">
         <!-- Page Header -->
         <div class="page-header">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('messages.dashboard')}}</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('admin.product.add-new')}}">{{__('messages.products')}}</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('admin.food.add-new')}}">{{__('messages.foods')}}</a></li>
                     <li class="breadcrumb-item" aria-current="page">{{__('messages.view')}}</li>
                 </ol>
             </nav>
@@ -29,14 +29,14 @@
                             for="stocksCheckbox{{ $product->id }}">
                             Status&nbsp;&nbsp;
                             <input type="checkbox"
-                                onclick="location.href='{{ route('admin.product.status', [$product['id'], $product->status ? 0 : 1]) }}'"
+                                onclick="location.href='{{ route('admin.food.status', [$product['id'], $product->status ? 0 : 1]) }}'"
                                 class="toggle-switch-input" id="stocksCheckbox{{ $product->id }}"
                                 {{ $product->status ? 'checked' : '' }}>
                             <span class="toggle-switch-label">
                                 <span class="toggle-switch-indicator"></span>
                             </span>
                         </label>
-                        <a href="{{route('admin.product.edit',[$product['id']])}}" class="btn btn-primary" style="margin-left:12px; margin-right: 20px;">
+                        <a href="{{route('admin.food.edit',[$product['id']])}}" class="btn btn-primary" style="margin-left:12px; margin-right: 20px;">
                             <i class="tio-edit"></i> {{__('messages.edit')}}
                         </a>
                     </div>
@@ -58,7 +58,9 @@
                                  alt="Image Description">
                             <div class="d-block">
                                 <h4 class="display-2 text-dark mb-0">{{round($product->avg_rating,1)}}</h4>
-                                
+                                <p> {{__('messages.of')}} {{$product->reviews->count()}} {{__('messages.reviews')}}
+                                    <span class="badge badge-soft-dark badge-pill ml-1"></span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -194,6 +196,111 @@
                 </div>
             </div>
             <!-- End Body -->
+        </div>
+        <!-- End Card -->
+
+        <!-- Card -->
+        <div class="card">
+            <div class="card-header">
+            {{__('messages.product')}} {{__('messages.reviews')}}
+            </div>
+            <!-- Table -->
+            <div class="table-responsive datatable-custom">
+                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap card-table"
+                       data-hs-datatables-options='{
+                     "columnDefs": [{
+                        "targets": [0, 3, 6],
+                        "orderable": false
+                      }],
+                     "order": [],
+                     "info": {
+                       "totalQty": "#datatableWithPaginationInfoTotalQty"
+                     },
+                     "search": "#datatableSearch",
+                     "entries": "#datatableEntries",
+                     "pageLength": 25,
+                     "isResponsive": false,
+                     "isShowPaging": false,
+                     "pagination": "datatablePagination"
+                   }'>
+                    <thead class="thead-light">
+                    <tr>
+                        <th>{{__('messages.reviewer')}}</th>
+                        <th>{{__('messages.review')}}</th>
+                        <th>{{__('messages.date')}}</th>
+                        <th>{{__('messages.status')}}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    @foreach($reviews as $review)
+                        <tr>
+                            <td>
+                                @if ($review->customer)
+                                    <a class="d-flex align-items-center"
+                                    href="{{route('admin.customer.view',[$review['user_id']])}}">
+                                        <div class="avatar avatar-circle">
+                                            <img class="avatar-img" width="75" height="75"
+                                                onerror="this.src='{{asset('public/assets/admin/img/160x160/img1.jpg')}}'"
+                                                src="{{asset('storage/app/public/profile/'.$review->customer->image)}}"
+                                                alt="Image Description">
+                                        </div>
+                                        <div class="ml-3">
+                                        <span class="d-block h5 text-hover-primary mb-0">{{$review->customer['f_name']." ".$review->customer['l_name']}} <i
+                                                class="tio-verified text-primary" data-toggle="tooltip" data-placement="top"
+                                                title="Verified Customer"></i></span>
+                                            <span class="d-block font-size-sm text-body">{{$review->customer->email}}</span>
+                                        </div>
+                                    </a>
+                                @else
+                                {{__('messages.customer_not_found')}}
+                                @endif
+                            </td>
+                            <td>
+                                <div class="text-wrap" style="width: 18rem;">
+                                    <div class="d-flex mb-2">
+                                        <label class="badge badge-soft-info">
+                                            {{$review->rating}} <i class="tio-star"></i>
+                                        </label>
+                                    </div>
+
+                                    <p>
+                                        {{$review['comment']}}
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                {{date('d M Y '.config('timeformat'),strtotime($review['created_at']))}}
+                            </td>
+                            <td>
+                                <label class="toggle-switch toggle-switch-sm" for="reviewCheckbox{{$review->id}}">
+                                    <input type="checkbox" onclick="status_form_alert('status-{{$review['id']}}','{{$review->status?__('messages.you_want_to_hide_this_review_for_customer'):__('messages.you_want_to_show_this_review_for_customer')}}', event)" class="toggle-switch-input" id="reviewCheckbox{{$review->id}}" {{$review->status?'checked':''}}>
+                                    <span class="toggle-switch-label">
+                                        <span class="toggle-switch-indicator"></span>
+                                    </span>
+                                </label>
+                                <form action="{{route('admin.food.reviews.status',[$review['id'],$review->status?0:1])}}" method="get" id="status-{{$review['id']}}">
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- End Table -->
+
+            <!-- Footer -->
+            <div class="card-footer">
+                <!-- Pagination -->
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                    <div class="col-12">
+                        {!! $reviews->links() !!}
+                    </div>
+                </div>
+                <!-- End Pagination -->
+            </div>
+            <!-- End Footer -->
         </div>
         <!-- End Card -->
     </div>
